@@ -1,5 +1,11 @@
+import Write from "./Write";
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <Write />
+    </div>
+  );
 }
 
 export default App;
