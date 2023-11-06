@@ -4,9 +4,9 @@ function List() {
   return (
     <div>
       <h1>List</h1>
-      <button>
-        <Link to="/write">Write</Link>
-      </button>
+      <Link to="/write">
+        <button>Write</button>
+      </Link>
     </div>
   );
 }
