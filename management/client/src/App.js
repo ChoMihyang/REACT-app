@@ -8,6 +8,7 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
+import CustomerAdd from "./components/CustomerAdd";
 
 const customers = [
   {
@@ -39,6 +40,7 @@ const customers = [
 function App() {
   return (
     <div>
+      <CustomerAdd />
       <Table>
         <TableHead>
           <TableRow>
