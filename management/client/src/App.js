@@ -1,6 +1,6 @@
 import React from "react";
 import Customer from "./components/Customer";
-import "./App.css";
+
 import {
   Table,
   TableHead,
