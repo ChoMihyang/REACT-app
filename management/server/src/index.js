@@ -25,6 +25,8 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
+app.use("/customers", require("./routes/customers"));
+
 // 指定したポートにアクセスする
 app.listen(port, () => {
   console.log(`${port}ポートで実行されました。`);
