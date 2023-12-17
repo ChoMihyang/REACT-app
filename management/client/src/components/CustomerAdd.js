@@ -1,15 +1,26 @@
 // 고객 추가 페이지
 // 顧客登録ページ
-// import React, { useState } from "react";
-
+import React, { useState } from "react";
+import { Button } from "@mui/material";
+import {
+  TextField,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import axios from "axios";
 
-const instance = axios.create({ baseURL: "http://localhost:4000" });
+// const axios = axios.create({ baseURL: "http://localhost:4000" });
 
 function CustomerAdd() {
   //                  const event
   // const submitHandler = (event) => {
-//                    const { target }
+  //                    const { target }
   // const submitHandler = ({ target }) => {
   const submitHandler = (event) => {
     const {
@@ -22,7 +33,7 @@ function CustomerAdd() {
       ],
     } = event;
     event.preventDefault();
-    
+
     const body = {
       email,
       name,
@@ -31,36 +42,80 @@ function CustomerAdd() {
       job,
       image: `https://picsum.photos/64?grayscale`,
     };
-
-    console.log(axios);
-    instance
+    axios
       .post("/register", body)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
 
+  const [job, setJob] = useState('');
+  const handleChange = (event) =>{
+    setJob(event.target.value);
+  };
   return (
-    <form onSubmit={submitHandler}>
-      <br />
-      <h1>顧客登録ページ</h1>
-      email:
-      <input type="email" name="email"></input>
-      <br />
-      氏名:
-      <input type="text" name="userName"></input>
-      <br />
-      生年月日:
-      <input type="text" name="birthday"></input>
-      <br />
-      性別: <input type="text" name="gender"></input>
-      <br />
-      職業:
-      <input type="text" name="job"></input>
-      <br />
-      プロフィール写真: <input type="file" name="image"></input>
-      <br />
-      <button>登録する</button>
-    </form>
+    <div>
+      <h1>Add Customer</h1>
+      <form onSubmit={submitHandler}>
+        <TextField
+          id="email-input"
+          label="email"
+          type="email"
+          variant="standard"
+        />
+        <br />
+        <TextField
+          id="name-input"
+          label="name"
+          type="text"
+          variant="standard"
+        />
+        <br />
+        <TextField
+          id="birthday-input"
+          label="birthday"
+          type="text"
+          variant="standard"
+        />
+        <br />
+        <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="Female"
+            />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+          </RadioGroup>
+        </FormControl>
+        <br />
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 185 }}>
+          <InputLabel id="demo-simple-select-standard-label">job</InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={job}
+            label="job"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>営業関連職</MenuItem>
+            <MenuItem value={20}>管理・企画・事務関連職、専門職</MenuItem>
+            <MenuItem value={30}>技術職（IT・Web・製造業）</MenuItem>
+            <MenuItem value={40}>技術職（建築・土木）</MenuItem>
+            <MenuItem value={50}>クリエイティブ関連職</MenuItem>
+            <MenuItem value={60}>その他</MenuItem>
+          </Select>
+        </FormControl>
+        <br />
+        <Button variant="contained" type="submit">
+          Add Customer
+        </Button>
+      </form>
+    </div>
   );
 }
 

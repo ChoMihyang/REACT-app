@@ -21,9 +21,9 @@ mongoose
   .catch((error) => console.log(error));
 
 // あるルートにアクセスされた際に表示する処理（res）を指定する
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello, world!");
+// });
 
 app.use("/customers", require("./routes/customers"));
 

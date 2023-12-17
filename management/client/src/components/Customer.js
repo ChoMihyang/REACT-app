@@ -1,30 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { TableRow, TableCell } from "@mui/material";
+import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
+// import PropTypes from "prop-types";
 
 // 한 명의 고객에 대한 정보를 출력
 // 一人の顧客についての情報を出力
-function Customer({ id, image, name, birthday, gender, job }) {
+function Customer() {
   return (
-    <TableRow>
-      <TableCell>{id}</TableCell>
-      <TableCell>
-        <img src={image} alt="profile" />
-      </TableCell>
-      <TableCell>{name}</TableCell>
-      <TableCell>{birthday}</TableCell>
-      <TableCell>{gender}</TableCell>
-      <TableCell>{job}</TableCell>
-    </TableRow>
+    <div>
+      <h1>Customer List</h1>
+      <Button variant="contained" component={Link} to="/add">Add Customer</Button>
+    </div>
   );
 }
 
-Customer.prototype = {
-  id: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  birthday: PropTypes.number.isRequired,
-  gender: PropTypes.string.isRequired,
-  job: PropTypes.string.isRequired,
-};
 export default Customer;
