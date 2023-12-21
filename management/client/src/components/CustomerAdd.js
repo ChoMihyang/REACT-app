@@ -1,6 +1,7 @@
 // 고객 추가 페이지
 // 顧客登録ページ
 import React, { useState } from "react";
+import {axios, post} from "axios";
 import { Button } from "@mui/material";
 import {
   TextField,
@@ -13,7 +14,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import axios from "axios";
+
 
 // const instance = axios.create({ baseURL: "http://localhost:4000/customers" });
 
@@ -23,6 +24,7 @@ function CustomerAdd() {
   //                    const { target }
   // const submitHandler = ({ target }) => {
   const submitHandler = (event) => {
+    event.preventDefault();
     const {
       target: [
         { value: email },
@@ -32,7 +34,7 @@ function CustomerAdd() {
         { value: job },
       ],
     } = event;
-    event.preventDefault();
+    
 
     const body = {
       email,
@@ -40,16 +42,20 @@ function CustomerAdd() {
       birthday,
       gender,
       job,
-      image: `https://picsum.photos/64?grayscale`,
     };
+
     axios
       .post("/register", body)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
 
-  const [job, setJob] = useState('');
-  const handleChange = (event) =>{
+  const addCustomer = () => {
+    // api주소로 데이터를 전달하도록 구현
+  }
+
+  const [job, setJob] = useState("");
+  const handleChange = (event) => {
     setJob(event.target.value);
   };
   return (
