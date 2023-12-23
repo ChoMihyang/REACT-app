@@ -4,7 +4,6 @@ import Customer from "./components/Customer";
 import CustomerAdd from "./components/CustomerAdd";
 
 function App() {
-  console.log("dd");
   return (
     <Router>
       <Routes>

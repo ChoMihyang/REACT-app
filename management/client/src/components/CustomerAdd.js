@@ -1,128 +1,109 @@
-// 고객 추가 페이지
-// 顧客登録ページ
+// // 고객 추가 페이지
+// // 顧客登録ページ
 import React, { useState } from "react";
-import {axios, post} from "axios";
-import { Button } from "@mui/material";
 import {
   TextField,
-  FormLabel,
-  RadioGroup,
+  Button,
   Radio,
+  RadioGroup,
   FormControlLabel,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
+import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://localhost:4000",
+});
 
-// const instance = axios.create({ baseURL: "http://localhost:4000/customers" });
+const CustomerAdd = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    birthday: "",
+    gender: "male",
+    job: "developer",
+  });
 
-function CustomerAdd() {
-  //                  const event
-  // const submitHandler = (event) => {
-  //                    const { target }
-  // const submitHandler = ({ target }) => {
-  const submitHandler = (event) => {
-    event.preventDefault();
-    const {
-      target: [
-        { value: email },
-        { value: name },
-        { value: birthday },
-        { value: gender },
-        { value: job },
-      ],
-    } = event;
-    
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const body = {
-      email,
-      name,
-      birthday,
-      gender,
-      job,
-    };
-
-    axios
-      .post("/register", body)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 폼 제출 처리
+    console.log(formData);
+    api
+      .post("/register", formData)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
 
-  const addCustomer = () => {
-    // api주소로 데이터를 전달하도록 구현
-  }
-
-  const [job, setJob] = useState("");
-  const handleChange = (event) => {
-    setJob(event.target.value);
-  };
   return (
     <div>
       <h1>Add Customer</h1>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <TextField
-          id="email-input"
-          label="email"
+          label="이메일"
           type="email"
-          variant="standard"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          fullWidth
+          required
+          margin="normal"
         />
-        <br />
         <TextField
-          id="name-input"
-          label="name"
+          label="이름"
           type="text"
-          variant="standard"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          fullWidth
+          required
+          margin="normal"
         />
-        <br />
         <TextField
-          id="birthday-input"
-          label="birthday"
+          label="생년월일"
           type="text"
-          variant="standard"
+          name="birthday"
+          value={formData.birthday}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
         />
-        <br />
-        <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+        <FormControl component="fieldset" margin="normal">
+          <InputLabel> 성별 </InputLabel>{" "}
           <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-          >
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
-            />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-          </RadioGroup>
-        </FormControl>
-        <br />
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 185 }}>
-          <InputLabel id="demo-simple-select-standard-label">job</InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={job}
-            label="job"
+            name="gender"
+            value={formData.gender}
             onChange={handleChange}
+            row
           >
-            <MenuItem value={10}>営業関連職</MenuItem>
-            <MenuItem value={20}>管理・企画・事務関連職、専門職</MenuItem>
-            <MenuItem value={30}>技術職（IT・Web・製造業）</MenuItem>
-            <MenuItem value={40}>技術職（建築・土木）</MenuItem>
-            <MenuItem value={50}>クリエイティブ関連職</MenuItem>
-            <MenuItem value={60}>その他</MenuItem>
-          </Select>
+            <FormControlLabel value="male" control={<Radio />} label="남성" />
+            <FormControlLabel value="female" control={<Radio />} label="여성" />
+          </RadioGroup>{" "}
         </FormControl>
-        <br />
-        <Button variant="contained" type="submit">
-          Add Customer
-        </Button>
+        <FormControl fullWidth margin="normal">
+          <InputLabel> 직업 </InputLabel>{" "}
+          <Select name="job" value={formData.job} onChange={handleChange}>
+            <MenuItem value="developer"> 개발자 </MenuItem>{" "}
+            <MenuItem value="designer"> 디자이너 </MenuItem>{" "}
+            <MenuItem value="manager"> 매니저 </MenuItem>{" "}
+          </Select>{" "}
+        </FormControl>
+        <Button type="submit" variant="contained" color="primary">
+          추가{" "}
+        </Button>{" "}
       </form>
     </div>
   );
-}
+};
 
 export default CustomerAdd;
