@@ -8,7 +8,9 @@ import {Button} from "@mui/material";
 function Customer() {
   return (
     <div>
-      <h1>Customer List</h1>
+      <h1>Main Page</h1>
+      <h2>Customers List</h2>
+      {/* DB에서 Customer 데이터 불러오기 */}
       <Button variant="contained" component={Link} to="/add">Add Customer</Button>
     </div>
   );

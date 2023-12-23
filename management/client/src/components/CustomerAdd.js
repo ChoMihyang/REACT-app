@@ -13,6 +13,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const api = axios.create({
   baseURL: "http://localhost:4000",
@@ -23,8 +24,8 @@ const CustomerAdd = () => {
     email: "",
     name: "",
     birthday: "",
-    gender: "male",
-    job: "developer",
+    gender: "",
+    job: "",
   });
 
   const handleChange = (e) => {
@@ -38,7 +39,7 @@ const CustomerAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 폼 제출 처리
-    console.log(formData);
+    console.log("formData", formData);
     api
       .post("/register", formData)
       .then((res) => console.log(res))
@@ -47,61 +48,86 @@ const CustomerAdd = () => {
 
   return (
     <div>
-      <h1>Add Customer</h1>
+      <h1>Add Customer Page</h1>
       <form onSubmit={handleSubmit}>
         <TextField
-          label="이메일"
+          label="Email"
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          fullWidth
           required
+          sx={{ width: 500 }}
           margin="normal"
         />
+        <br />
         <TextField
-          label="이름"
+          label="Name"
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          fullWidth
           required
+          sx={{ width: 500 }}
           margin="normal"
         />
+        <br />
         <TextField
-          label="생년월일"
+          label="Birthday"
           type="text"
           name="birthday"
           value={formData.birthday}
           onChange={handleChange}
-          fullWidth
+          sx={{ width: 500 }}
           margin="normal"
         />
-        <FormControl component="fieldset" margin="normal">
-          <InputLabel> 성별 </InputLabel>{" "}
+        <br />
+        <FormControl variant="standard">
+          <InputLabel> Gender </InputLabel> <br />
+          <br />
           <RadioGroup
             name="gender"
             value={formData.gender}
             onChange={handleChange}
             row
           >
-            <FormControlLabel value="male" control={<Radio />} label="남성" />
-            <FormControlLabel value="female" control={<Radio />} label="여성" />
+            <FormControlLabel
+              value="male"
+              control={<Radio />}
+              label="male"
+              sx={{ marginRight: "100px" }}
+            />
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="female"
+            />
           </RadioGroup>{" "}
         </FormControl>
-        <FormControl fullWidth margin="normal">
-          <InputLabel> 직업 </InputLabel>{" "}
+        <br />
+        <FormControl variant="standard" sx={{ width: 500 }} margin="normal">
+          <InputLabel> Job </InputLabel>{" "}
           <Select name="job" value={formData.job} onChange={handleChange}>
-            <MenuItem value="developer"> 개발자 </MenuItem>{" "}
-            <MenuItem value="designer"> 디자이너 </MenuItem>{" "}
-            <MenuItem value="manager"> 매니저 </MenuItem>{" "}
+            <MenuItem value="Public">公共サービス職</MenuItem>
+            <MenuItem value="Sales">営業関連職</MenuItem>
+            <MenuItem value="Professional">
+              管理・企画・事務関連職、専門職
+            </MenuItem>
+            <MenuItem value="Information">情報技術職</MenuItem>
+            <MenuItem value="Entertainment">エンターテインメント職</MenuItem>
+            <MenuItem value="Production">製造・生産職</MenuItem>
+            <MenuItem value="Construction">建設職</MenuItem>
+            <MenuItem value="other">その他</MenuItem>
           </Select>{" "}
         </FormControl>
-        <Button type="submit" variant="contained" color="primary">
-          추가{" "}
+        <br /><br />
+        <Button type="submit" variant="contained">
+          Add Customer{" "}
         </Button>{" "}
-      </form>
+      </form><br />
+      <Button variant="outlined" component={Link} to="/">
+        Main Page
+      </Button>
     </div>
   );
 };
